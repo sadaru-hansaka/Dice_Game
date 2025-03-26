@@ -1,5 +1,6 @@
 package com.example.w2053226
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,13 +29,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat.Style
 import com.example.w2053226.ui.theme.W2053226Theme
 import androidx.compose.material3.Text as Text
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +47,7 @@ class MainActivity : ComponentActivity() {
             GUI()
         }
     }
+
 }
 
 @Composable
@@ -54,15 +60,27 @@ fun GUI(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Text(
+            text = "Dice Game",
+            modifier = Modifier.padding(bottom = 60.dp),
+            style = TextStyle(
+                fontSize = 50.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Red
+            )
+        )
         Button(onClick = {
             var i = Intent(context, MainActivity2::class.java)
-            context.startActivity(i)
+            i.putExtra("humanWins",0)
+            i.putExtra("computerWins", 0)
+            (context as Activity).startActivityForResult(i, 1)
         }) {
             Text(text = "New Game")
         }
         Button(onClick = { openDialog=true }) {
             Text(text = "About")
         }
+
     }
     if(openDialog){
         AlertDialog(
@@ -91,5 +109,7 @@ fun GUI(){
         )
     }
 }
+
+
 
 
